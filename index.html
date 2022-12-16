@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>타이틀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+<style>
+    body {padding: 0;margin: 0;}
+    header {height:200px;background: #000;}
+    footer {height:300px;background: #000;}
+    section {position: relative;height: 1200px;}
+    .fixed_menu {position: absolute;top: 15px;right: 15px;width: 200px;height:700px;background: #a6e6ff; }
+</style>
+</head>
+<body>
+    <div class="wrap">
+        <header></header>
+        <section>
+            <div class="fixed_menu"></div>
+        </section>
+        <footer></footer>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            scrollAct();
+        })
+
+        //스크롤 시 fixed
+        function scrollAct(){
+            var position = $(".fixed_menu").offset().top; //fixed 메뉴 위치
+
+            $(window).on('scroll', function() {
+                var scrollTop = $(window).scrollTop(); //현재 스크롤 위치
+                var footerH = $('footer').height(); //footer 높이
+                var wrapH = $('.wrap').height(); //모든 컨텐츠 높이
+                var conH = wrapH - footerH - $('.fixed_menu').height() - position; //footer 까지 스크롤 도달 위치 계산
+                
+                if (scrollTop + 15 > position){ //
+                    if (conH + position - 30 > scrollTop){
+                        $('.fixed_menu').css({'position':'fixed', 'top':'15px'})
+                    }else {
+                        $('.fixed_menu').css({'position':'absolute','top':conH})
+                    }   
+                }else{
+                    $('.fixed_menu').css({'position':'absolute','top':'15px'})
+                }
+            })
+        }
+    </script>
+</body>
+</html>
